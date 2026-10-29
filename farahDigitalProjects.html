@@ -31,6 +31,8 @@
 	  style="width:80%; max-width:1280px; height:auto; aspect-ratio:1280/720; border:0; display:block; margin:0 auto;"
 	></iframe>
 	
+	<button class="likeButtons">Like</button>
+	<span class="numLikes">0</span>
 	</div>
 	
 	
@@ -48,8 +50,44 @@
   frameborder="0"
   style="width:80%; max-width:1280px; height:auto; aspect-ratio:1280/720; border:0; display:block; margin:0 auto;"
 ></iframe>
-		
+	<button class="likeButtons">Like</button>
+	<span class="numLikes">0</span>
 	</div>
 	
+<script type="module">
+  // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+	import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBnh3qITQC2Rm9kgg_jViqre2hsm14w7A8",
+      authDomain: "farahlikebuttons1.firebaseapp.com",
+      projectId: "farahlikebuttons1",
+      storageBucket: "farahlikebuttons1.firebasestorage.app",
+      messagingSenderId: "1084454332957",
+      appId: "1:1084454332957:web:a3b3ed68b98529eb31f4f4"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+	const db = getDatabase(app) ;
+	const likeButtons = document.querySelectorAll(".likeButtons")
+	const numLikes = document.querySelectorAll(".numLikes")
+
+	for (let i=0; i<likeButtons.length; i++) {
+		likeButtons[i].addEventListener('click', function(){ Like(i) })
+	}
+
+	function Like(i) {
+		let numberLikes = parseInt(numLikes[i].innerHTML)
+		numberLikes = numberLikes + 1
+		set(ref(db, "project " + i), {
+			numLikes: numberLikes,
+		});	
+	}
+</script>
 	
 </body>
